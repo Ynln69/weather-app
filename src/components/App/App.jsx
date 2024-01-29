@@ -14,23 +14,29 @@ const { selectLocation, selectLanguage, selectScaleType } = selectors;
 const { fetchCurrentWeather } = operations;
 
 const App = () => {
-  const [confirm, setConfirm] = useState(false);
+  // const [confirm, setConfirm] = useState(false);
+  const [isAccess, setIsAccess] = useState(false);
   const dispatch = useDispatch();
+
   const location = useSelector(selectLocation);
   const lang = useSelector(selectLanguage);
   const scaleType = useSelector(selectScaleType);
-  console.log(scaleType);
+
   useEffect(() => {
-    if (!confirm) {
-      dispatch(setLocation({ lat: 50.4501, lon: 30.5234 })); //координати Києва
-      return;
-    }
+    // const confirmGeolocation = window.confirm(
+    //   "Веб-сайт WeatherWise бажає використовувати ваше місцеположення. Дозволити?"
+    // );
+    // if (!confirm) {
+    //   dispatch(setLocation({ lat: 50.4501, lon: 30.5234 })); //координати Києва
+    //   return;
+    // }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
           dispatch(
             setLocation({ lat: coords.latitude, lon: coords.longitude })
           );
+          setIsAccess(true);
         },
         (error) => {
           console.error(error.message);
@@ -39,7 +45,7 @@ const App = () => {
     } else {
       console.log("Геолокація не підтримується цим браузером");
     }
-  }, [dispatch, confirm]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!location) {
@@ -48,16 +54,16 @@ const App = () => {
     dispatch(fetchCurrentWeather({ ...location, lang, scaleType }));
   }, [dispatch, location, lang, scaleType]);
 
-  const handleMyLocationClick = () => {
-    setConfirm(true);
-  };
+  // const handleMyLocationClick = () => {
+  //   setConfirm(true);
+  // };
 
   return (
     <AppContainer>
-      <button onClick={handleMyLocationClick}>Get my location </button>
+      {/* <button onClick={handleMyLocationClick}>Get my location </button> */}
       <FilterLang />
       <FilterWeather />
-      <WeatherList />
+      {isAccess && <WeatherList />}
     </AppContainer>
   );
 };
