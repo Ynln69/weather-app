@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+
+import actions from "../../redux/weatherSlice";
 import {
   Item,
   ItemCity,
@@ -7,33 +10,48 @@ import {
   Temperature,
   Feels,
   Parameters,
+  ParametersItem,
 } from "./WeatherItem.styled";
 
-const WeatherItem = () => {
+const { setScaleType } = actions;
+
+const WeatherItem = ({ weatherData }) => {
+  const dispatch = useDispatch();
+
+  const handleUnitClick = (newScale) => {
+    dispatch(setScaleType(newScale));
+  };
+
   return (
     <Item>
       <>
-        <ItemCity></ItemCity>
+        <ItemCity>
+          {weatherData.cityName},<span>{weatherData.countryName}</span>
+        </ItemCity>
         <ItemTime>Fri, 19 February, 10:17</ItemTime>
         <WeatherBox>
-          <img src="" alt="" />
-          <Weather>Sunny</Weather>
+          <img src={weatherData.iconUrl} alt="" />
+          <Weather>{weatherData.weather}</Weather>
         </WeatherBox>
         <div></div>
-        <Temperature>+18</Temperature>
+        <div>
+          <Temperature>{weatherData.temp}</Temperature>
+          <button onClick={() => handleUnitClick("metric")}>C</button>
+          <button onClick={() => handleUnitClick("imperial")}>F</button>
+        </div>
         <Feels>
-          Feels like:<span></span>
+          Feels like:<span>{weatherData.feels_like}</span>
         </Feels>
         <Parameters>
-          <li>
-            Wind: <span></span>
-          </li>
-          <li>
-            Humidity: <span></span>
-          </li>
-          <li>
-            Pressure: <span></span>
-          </li>
+          <ParametersItem>
+            Wind: <span>{weatherData.speed}m/s</span>
+          </ParametersItem>
+          <ParametersItem>
+            Humidity: <span>{weatherData.humidity}%</span>
+          </ParametersItem>
+          <ParametersItem>
+            Pressure: <span>{weatherData.pressure}Pa</span>
+          </ParametersItem>
         </Parameters>
       </>
     </Item>

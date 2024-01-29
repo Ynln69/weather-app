@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/weatherSlice";
 import selectors from "../../redux/selectors";
@@ -7,36 +8,53 @@ import FilterLang from "../LanguageFilter/LanguageFilter";
 import FilterWeather from "../FilterWeather/FilterWeather";
 import WeatherList from "../WeatherList/WeatherList";
 import { AppContainer } from "./App.styled";
-import { useEffect } from "react";
 
 const { setLocation } = actions;
-const { selectLocation } = selectors;
+const { selectLocation, selectLanguage, selectScaleType } = selectors;
 const { fetchCurrentWeather } = operations;
 
 const App = () => {
+  const [confirm, setConfirm] = useState(false);
   const dispatch = useDispatch();
   const location = useSelector(selectLocation);
-  if ("geolocation" in navigator) {
-    console.log(1);
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        console.log(2);
-        dispatch(setLocation({ lat: coords.latitude, lon: coords.longitude }));
-      },
-      (error) => {
-        console.error(error.message);
-      }
-    );
-  } else {
-    console.log("Геолокація не підтримується цим браузером");
-  }
+  const lang = useSelector(selectLanguage);
+  const scaleType = useSelector(selectScaleType);
+  console.log(scaleType);
+  useEffect(() => {
+    if (!confirm) {
+      dispatch(setLocation({ lat: 50.4501, lon: 30.5234 })); //координати Києва
+      return;
+    }
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          dispatch(
+            setLocation({ lat: coords.latitude, lon: coords.longitude })
+          );
+        },
+        (error) => {
+          console.error(error.message);
+        }
+      );
+    } else {
+      console.log("Геолокація не підтримується цим браузером");
+    }
+  }, [dispatch, confirm]);
 
   useEffect(() => {
-    dispatch(fetchCurrentWeather());
-  }, [dispatch, location]);
+    if (!location) {
+      return;
+    }
+    dispatch(fetchCurrentWeather({ ...location, lang, scaleType }));
+  }, [dispatch, location, lang, scaleType]);
+
+  const handleMyLocationClick = () => {
+    setConfirm(true);
+  };
 
   return (
     <AppContainer>
+      <button onClick={handleMyLocationClick}>Get my location </button>
       <FilterLang />
       <FilterWeather />
       <WeatherList />

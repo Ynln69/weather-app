@@ -6,8 +6,8 @@ const { fetchCurrentWeather } = operations;
 const weatherSlice = createSlice({
   name: "weather",
   initialState: {
-    location: { lat: 50.4501, lon: 30.5234 }, //координати Києва
-    scaleType: "celsius",
+    location: null,
+    scaleType: "metric", //metric = Celsius | іmperial= Fahrenheit
     language: "en",
     weather: {},
     isLoading: false,

@@ -10,8 +10,12 @@ export const Item = styled.li`
 `;
 
 export const ItemCity = styled.h2`
-  font: normal normal normal 16px/23px Jost;
+  margin-bottom: 4px;
+  font: normal normal normal 20px/23px Jost;
   letter-spacing: 0px;
+  & > span {
+    font-weight: normal;
+  }
 `;
 
 export const ItemTime = styled.p`
@@ -34,11 +38,21 @@ export const Weather = styled.p`
 `;
 
 export const Temperature = styled.p`
+  margin: 20px 0;
   font: normal normal normal 44px/64px Jost;
   letter-spacing: 0px;
+  & > span {
+    font-size: 24px;
+    color: #707070;
+    margin: 0 5px;
+  }
 `;
 
 export const Feels = styled.p`
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+
   font: normal normal normal 13px/19px Jost;
   letter-spacing: 0px;
   color: #c5c5c5;
@@ -48,4 +62,14 @@ export const Parameters = styled.ul`
   position: absolute;
   right: 10px;
   bottom: 10px;
+`;
+
+export const ParametersItem = styled.li`
+  font: normal normal normal 12px/18px Jost;
+  letter-spacing: 0px;
+  color: #000000;
+  > span {
+    font-weight: 600;
+    color: #ffa25b;
+  }
 `;
