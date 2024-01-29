@@ -12,6 +12,8 @@ const fetchCurrentWeather = createAsyncThunk(
           weather,
           main: { temp, feels_like, humidity, pressure },
           wind: { speed },
+          dt,
+          id,
         },
       } = await getCurrentWeather({ lat, lon, lang, scaleType });
       console.log(
@@ -22,9 +24,11 @@ const fetchCurrentWeather = createAsyncThunk(
         feels_like,
         humidity,
         pressure,
-        speed
+        speed,
+        dt,
+        id
       );
-      const { icon, main } = weather[0];
+      const { icon, main, description } = weather[0];
       const iconUrl = `https://openweathermap.org/img/wn/${icon}.png`;
       return {
         cityName,
@@ -37,6 +41,9 @@ const fetchCurrentWeather = createAsyncThunk(
         speed,
         icon,
         iconUrl,
+        description,
+        dt,
+        id,
       };
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

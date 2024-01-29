@@ -7,6 +7,9 @@ export const Item = styled.li`
   padding: 10px 15px;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
+
+  background-color: ${(props) =>
+    props.temperature <= 0 ? "#F1F2FF" : "#FFFAF1"};
 `;
 
 export const ItemCity = styled.h2`
@@ -37,15 +40,27 @@ export const Weather = styled.p`
   color: #c5c5c5;
 `;
 
+export const TempBox = styled.div`
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 5px;
+  position: absolute;
+  bottom: 24px;
+`;
+
 export const Temperature = styled.p`
-  margin: 20px 0;
   font: normal normal normal 44px/64px Jost;
   letter-spacing: 0px;
-  & > span {
-    font-size: 24px;
-    color: #707070;
-    margin: 0 5px;
-  }
+`;
+
+export const ScaleButton = styled.button`
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  color: ${(props) => (props.isActive ? "#000000" : "#8D8D8D")};
+  font: normal normal normal 22px/32px Jost;
+  letter-spacing: 0px;
 `;
 
 export const Feels = styled.p`
@@ -56,6 +71,10 @@ export const Feels = styled.p`
   font: normal normal normal 13px/19px Jost;
   letter-spacing: 0px;
   color: #c5c5c5;
+  > span {
+    margin-left: 5px;
+    font-weight: 600;
+  }
 `;
 
 export const Parameters = styled.ul`
