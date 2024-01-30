@@ -1,5 +1,5 @@
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-
 import actions from "../../redux/weatherSlice";
 import selectors from "../../redux/selectors";
 
@@ -18,7 +18,6 @@ import {
   TempBox,
   ScaleButton,
 } from "./WeatherItem.styled";
-// import WeatherChart from "../WeatherChart/WeatherChart";
 
 const { setScaleType } = actions;
 const { selectScaleType } = selectors;
@@ -35,7 +34,7 @@ const WeatherItem = ({ weatherData }) => {
   const roundedTemp = Math.round(weatherData.temp);
   const roundedFeelsLike = Math.round(weatherData.feels_like);
   const displayScaleType = scaleType === "metric" ? "\u2103" : "\u2109";
-  console.log(weatherData.weather);
+
   return (
     <Item temperature={roundedTemp}>
       <>
@@ -45,12 +44,11 @@ const WeatherItem = ({ weatherData }) => {
         <ItemTime>{formattedDate}</ItemTime>
 
         {weatherData.weather.map((item, index) => (
-          <WeatherBox>
+          <WeatherBox key={index}>
             <img src={item.iconUrl} alt={item.description} />
             <Weather>{item.main}</Weather>
           </WeatherBox>
         ))}
-        <div>{/* <WeatherChart city="Kyiv" /> */}</div>
         <TempBox>
           <Temperature>{roundedTemp}</Temperature>
           <ScaleButton
@@ -88,6 +86,27 @@ const WeatherItem = ({ weatherData }) => {
       </>
     </Item>
   );
+};
+
+WeatherItem.propTypes = {
+  weatherData: PropTypes.shape({
+    id: PropTypes.number,
+    cityName: PropTypes.string,
+    countryName: PropTypes.string,
+    dt: PropTypes.number,
+    weather: PropTypes.arrayOf(
+      PropTypes.shape({
+        iconUrl: PropTypes.string,
+        description: PropTypes.string,
+        main: PropTypes.string,
+      })
+    ),
+    temp: PropTypes.number,
+    feels_like: PropTypes.number,
+    speed: PropTypes.number,
+    humidity: PropTypes.number,
+    pressure: PropTypes.number,
+  }).isRequired,
 };
 
 export default WeatherItem;
