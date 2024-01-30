@@ -9,7 +9,7 @@ const weatherSlice = createSlice({
     location: null,
     scaleType: "metric", //metric = Celsius | іmperial= Fahrenheit
     language: "en",
-    weather: {},
+    weather: { weather: [] },
     isLoading: false,
     error: null,
   },
