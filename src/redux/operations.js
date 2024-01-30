@@ -16,26 +16,13 @@ const fetchCurrentWeather = createAsyncThunk(
           id,
         },
       } = await getCurrentWeather({ lat, lon, lang, scaleType });
-      console.log(
-        cityName,
-        countryName,
-        weather,
-        temp,
-        feels_like,
-        humidity,
-        pressure,
-        speed,
-        dt,
-        id
-      );
+
       const weatherDetails = weather.map((w) => ({
         icon: w.icon,
         main: w.main,
         description: w.description,
         iconUrl: `https://openweathermap.org/img/wn/${w.icon}.png`,
       }));
-      console.log(weatherDetails);
-
       return {
         cityName,
         countryName,
