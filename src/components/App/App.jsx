@@ -7,6 +7,7 @@ import operations from "../../redux/operations";
 import FilterLang from "../LanguageFilter/LanguageFilter";
 import FilterWeather from "../FilterWeather/FilterWeather";
 import WeatherList from "../WeatherList/WeatherList";
+
 import { AppContainer } from "./App.styled";
 
 const { setLocation } = actions;

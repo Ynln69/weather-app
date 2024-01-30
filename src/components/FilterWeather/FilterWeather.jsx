@@ -1,7 +1,9 @@
-import { Thumb, Input, Button } from "./FilterWeather.styled";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+
 import initAutocomplete from "../../utils/initAutocomplete";
+
+import { Thumb, Input, Button } from "./FilterWeather.styled";
 
 const FilterWeather = () => {
   const [input, setInput] = useState("");
