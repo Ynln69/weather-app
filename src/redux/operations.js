@@ -28,20 +28,23 @@ const fetchCurrentWeather = createAsyncThunk(
         dt,
         id
       );
-      const { icon, main, description } = weather[0];
-      const iconUrl = `https://openweathermap.org/img/wn/${icon}.png`;
+      const weatherDetails = weather.map((w) => ({
+        icon: w.icon,
+        main: w.main,
+        description: w.description,
+        iconUrl: `https://openweathermap.org/img/wn/${w.icon}.png`,
+      }));
+      console.log(weatherDetails);
+
       return {
         cityName,
         countryName,
-        weather: main,
+        weather: weatherDetails,
         temp,
         feels_like,
         humidity,
         pressure,
         speed,
-        icon,
-        iconUrl,
-        description,
         dt,
         id,
       };

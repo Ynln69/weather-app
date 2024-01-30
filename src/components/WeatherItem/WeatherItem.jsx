@@ -24,7 +24,6 @@ const { setScaleType } = actions;
 const { selectScaleType } = selectors;
 
 const WeatherItem = ({ weatherData }) => {
-  console.log(weatherData);
   const dispatch = useDispatch();
   const scaleType = useSelector(selectScaleType);
 
@@ -36,7 +35,7 @@ const WeatherItem = ({ weatherData }) => {
   const roundedTemp = Math.round(weatherData.temp);
   const roundedFeelsLike = Math.round(weatherData.feels_like);
   const displayScaleType = scaleType === "metric" ? "\u2103" : "\u2109";
-
+  console.log(weatherData.weather);
   return (
     <Item temperature={roundedTemp}>
       <>
@@ -44,10 +43,13 @@ const WeatherItem = ({ weatherData }) => {
           {weatherData.cityName},<span>{weatherData.countryName}</span>
         </ItemCity>
         <ItemTime>{formattedDate}</ItemTime>
-        <WeatherBox>
-          <img src={weatherData.iconUrl} alt={weatherData.description} />
-          <Weather>{weatherData.weather}</Weather>
-        </WeatherBox>
+
+        {weatherData.weather.map((item, index) => (
+          <WeatherBox>
+            <img src={item.iconUrl} alt={item.description} />
+            <Weather>{item.main}</Weather>
+          </WeatherBox>
+        ))}
         <div>{/* <WeatherChart city="Kyiv" /> */}</div>
         <TempBox>
           <Temperature>{roundedTemp}</Temperature>
