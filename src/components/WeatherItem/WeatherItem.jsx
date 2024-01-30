@@ -18,6 +18,7 @@ import {
   TempBox,
   ScaleButton,
 } from "./WeatherItem.styled";
+import WeatherChart from "../WeatherChart/WeatherChart";
 
 const { setScaleType } = actions;
 const { selectScaleType } = selectors;
@@ -49,6 +50,7 @@ const WeatherItem = ({ weatherData }) => {
             <Weather>{item.main}</Weather>
           </WeatherBox>
         ))}
+        <WeatherChart temperature={roundedTemp} />
         <TempBox>
           <Temperature>{roundedTemp}</Temperature>
           <ScaleButton

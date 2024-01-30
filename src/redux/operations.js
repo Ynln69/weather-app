@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import getCurrentWeather from "../service/openweathermapAPI";
+import service from "../service/openweathermapAPI";
+
+const { getCurrentWeather, getWeatherForWeek } = service;
 
 const fetchCurrentWeather = createAsyncThunk(
   "weather/getCurrentDate",
@@ -41,8 +43,32 @@ const fetchCurrentWeather = createAsyncThunk(
   }
 );
 
+const fetchWeatherForWeek = createAsyncThunk(
+  "weather/getDateForWeek",
+  async ({ lat, lon }, thunkApi) => {
+    console.log("fetchWeatherForWeek called with city_name:", lat, lon);
+    try {
+      const {
+        data: { list },
+      } = await getWeatherForWeek({ lat, lon });
+
+      const firstEightItems = list.slice(0, 8);
+
+      const listDetails = firstEightItems.map(({ dt, main: { temp } }) => ({
+        dt,
+        temp,
+      }));
+      console.log(listDetails);
+      return listDetails;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 const data = {
   fetchCurrentWeather,
+  fetchWeatherForWeek,
 };
 
 export default data;

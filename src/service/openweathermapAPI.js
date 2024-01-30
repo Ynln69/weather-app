@@ -9,4 +9,15 @@ const getCurrentWeather = async ({ lat, lon, lang, scaleType }) => {
   );
 };
 
-export default getCurrentWeather;
+const getWeatherForWeek = async ({ lat, lon }) => {
+  return await axios(
+    `${BASE_URL}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+  );
+};
+
+const data = {
+  getCurrentWeather,
+  getWeatherForWeek,
+};
+
+export default data;

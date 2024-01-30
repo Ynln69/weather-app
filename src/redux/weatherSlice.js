@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import operations from "./operations";
 
-const { fetchCurrentWeather } = operations;
+const { fetchCurrentWeather, fetchWeatherForWeek } = operations;
 
 const weatherSlice = createSlice({
   name: "weather",
@@ -10,6 +10,8 @@ const weatherSlice = createSlice({
     scaleType: "metric", //metric = Celsius | іmperial= Fahrenheit
     language: "en",
     weather: { weather: [] },
+    weatherForWeek: [],
+    city_name: "",
     isLoading: false,
     error: null,
   },
@@ -35,6 +37,19 @@ const weatherSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCurrentWeather.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      });
+    builder
+      .addCase(fetchWeatherForWeek.fulfilled, (state, { payload }) => {
+        state.weatherForWeek = payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchWeatherForWeek.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchWeatherForWeek.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       });

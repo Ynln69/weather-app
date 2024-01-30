@@ -24,6 +24,7 @@ export const ItemCity = styled.h2`
 export const ItemTime = styled.p`
   font: normal normal 300 18px/26px Jost;
   letter-spacing: 0px;
+  margin-bottom: 10px;
 `;
 
 export const WeatherBox = styled.div`
