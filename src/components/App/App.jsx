@@ -14,7 +14,6 @@ const { selectLocation, selectLanguage, selectScaleType } = selectors;
 const { fetchCurrentWeather } = operations;
 
 const App = () => {
-  // const [confirm, setConfirm] = useState(false);
   const [isAccess, setIsAccess] = useState(false);
   const dispatch = useDispatch();
 
@@ -23,13 +22,6 @@ const App = () => {
   const scaleType = useSelector(selectScaleType);
 
   useEffect(() => {
-    // const confirmGeolocation = window.confirm(
-    //   "Веб-сайт WeatherWise бажає використовувати ваше місцеположення. Дозволити?"
-    // );
-    // if (!confirm) {
-    //   dispatch(setLocation({ lat: 50.4501, lon: 30.5234 })); //координати Києва
-    //   return;
-    // }
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
@@ -54,13 +46,8 @@ const App = () => {
     dispatch(fetchCurrentWeather({ ...location, lang, scaleType }));
   }, [dispatch, location, lang, scaleType]);
 
-  // const handleMyLocationClick = () => {
-  //   setConfirm(true);
-  // };
-
   return (
     <AppContainer>
-      {/* <button onClick={handleMyLocationClick}>Get my location </button> */}
       <FilterLang />
       <FilterWeather />
       {isAccess && <WeatherList />}
