@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import initAutocomplete from "../../utils/initAutocomplete";
+import utils from "../../utils/initAutocomplete";
 
 import { Thumb, Input, Button } from "./FilterWeather.styled";
+
+const { initAutocomplete, handleSubmit } = utils;
 
 const FilterWeather = () => {
   const [input, setInput] = useState("");
@@ -14,19 +16,23 @@ const FilterWeather = () => {
     initAutocomplete(inputRef, dispatch, setInput);
   }, [dispatch]);
 
-  const handleAddCity = () => {
-    // Можна додати додаткову логіку тут, якщо потрібно
+  const handleAddCity = (e) => {
+    e.preventDefault();
+    if (input.trim() !== "") {
+      handleSubmit(dispatch, setInput);
+      setInput("");
+    }
   };
 
   return (
-    <Thumb>
+    <Thumb onSubmit={handleAddCity}>
       <Input
         type="text"
         ref={inputRef}
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <Button onClick={handleAddCity}>Add</Button>
+      <Button type="submit">Add</Button>
     </Thumb>
   );
 };

@@ -37,7 +37,7 @@ const WeatherItem = ({ weatherData }) => {
   const displayScaleType = scaleType === "metric" ? "\u2103" : "\u2109";
 
   return (
-    <Item temperature={roundedTemp}>
+    <Item temperature={roundedTemp} key={weatherData.id}>
       <>
         <ItemCity>
           {weatherData.cityName},<span>{weatherData.countryName}</span>

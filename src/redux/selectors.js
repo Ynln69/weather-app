@@ -1,4 +1,5 @@
-const selectLocation = (state) => state.location;
+const selectDefaultLocation = (state) => state.defaultLocation;
+const selectLocationForSearch = (state) => state.locationForSearch;
 const selectScaleType = (state) => state.scaleType;
 const selectLanguage = (state) => state.language;
 const selectWeather = (state) => state.weather;
@@ -7,7 +8,8 @@ const selectIsLoading = (state) => state.isLoading;
 const selectError = (state) => state.error;
 
 const data = {
-  selectLocation,
+  selectDefaultLocation,
+  selectLocationForSearch,
   selectScaleType,
   selectLanguage,
   selectWeather,

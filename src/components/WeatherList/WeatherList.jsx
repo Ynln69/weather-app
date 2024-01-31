@@ -10,7 +10,9 @@ const WeatherList = () => {
   const weather = useSelector(selectWeather);
   return (
     <List>
-      <WeatherItem weatherData={weather} />
+      {weather.map((item) => {
+        return <WeatherItem weatherData={item} />;
+      })}
     </List>
   );
 };

@@ -46,7 +46,6 @@ const fetchCurrentWeather = createAsyncThunk(
 const fetchWeatherForWeek = createAsyncThunk(
   "weather/getDateForWeek",
   async ({ lat, lon }, thunkApi) => {
-    console.log("fetchWeatherForWeek called with city_name:", lat, lon);
     try {
       const {
         data: { list },

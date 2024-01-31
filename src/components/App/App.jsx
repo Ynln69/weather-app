@@ -10,15 +10,21 @@ import WeatherList from "../WeatherList/WeatherList";
 
 import { AppContainer } from "./App.styled";
 
-const { setLocation } = actions;
-const { selectLocation, selectLanguage, selectScaleType } = selectors;
+const { setDefaultLocation } = actions;
+const {
+  selectDefaultLocation,
+  selectLanguage,
+  selectScaleType,
+  selectLocationForSearch,
+} = selectors;
 const { fetchCurrentWeather } = operations;
 
 const App = () => {
   const [isAccess, setIsAccess] = useState(false);
   const dispatch = useDispatch();
 
-  const location = useSelector(selectLocation);
+  const defaultLocation = useSelector(selectDefaultLocation);
+  const locationForSearch = useSelector(selectLocationForSearch);
   const lang = useSelector(selectLanguage);
   const scaleType = useSelector(selectScaleType);
 
@@ -27,9 +33,17 @@ const App = () => {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
           dispatch(
-            setLocation({ lat: coords.latitude, lon: coords.longitude })
+            setDefaultLocation({ lat: coords.latitude, lon: coords.longitude })
           );
           setIsAccess(true);
+          dispatch(
+            fetchCurrentWeather({
+              lat: coords.latitude,
+              lon: coords.longitude,
+              lang,
+              scaleType,
+            })
+          );
         },
         (error) => {
           console.error(error.message);
@@ -38,20 +52,20 @@ const App = () => {
     } else {
       console.log("Геолокація не підтримується цим браузером");
     }
-  }, [dispatch]);
+  }, [dispatch, lang, scaleType]);
 
   useEffect(() => {
-    if (!location) {
+    if (!locationForSearch) {
       return;
     }
-    dispatch(fetchCurrentWeather({ ...location, lang, scaleType }));
-  }, [dispatch, location, lang, scaleType]);
+    dispatch(fetchCurrentWeather({ ...locationForSearch, lang, scaleType }));
+  }, [dispatch, locationForSearch, lang, scaleType]);
 
   return (
     <AppContainer>
       <FilterLang />
       <FilterWeather />
-      {isAccess && <WeatherList />}
+      {isAccess && (locationForSearch || defaultLocation) && <WeatherList />}
     </AppContainer>
   );
 };

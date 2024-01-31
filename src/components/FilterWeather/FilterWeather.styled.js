@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Thumb = styled.div`
+export const Thumb = styled.form`
   display: flex;
   justify-content: center;
   gap: 10px;

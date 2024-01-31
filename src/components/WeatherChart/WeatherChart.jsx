@@ -8,13 +8,16 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(...registerables, ChartDataLabels);
 
-const { selectWeatherForWeek, selectLocation } = selectors;
+const { selectWeatherForWeek, selectLocationForSearch, selectDefaultLocation } =
+  selectors;
 const { fetchWeatherForWeek } = operations;
 
 const WeatherChart = ({ temperature }) => {
   const dispatch = useDispatch();
   const weatherData = useSelector(selectWeatherForWeek);
-  const { lat, lon } = useSelector(selectLocation);
+  const locationForSearch = useSelector(selectLocationForSearch);
+  const defaultLocation = useSelector(selectDefaultLocation);
+  const { lat, lon } = locationForSearch || defaultLocation;
 
   useEffect(() => {
     if (lat && lon) {

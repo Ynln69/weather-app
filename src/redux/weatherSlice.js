@@ -6,18 +6,21 @@ const { fetchCurrentWeather, fetchWeatherForWeek } = operations;
 const weatherSlice = createSlice({
   name: "weather",
   initialState: {
-    location: null,
+    defaultLocation: null,
+    locationForSearch: null,
     scaleType: "metric", //metric = Celsius | іmperial= Fahrenheit
     language: "en",
-    weather: { weather: [] },
+    weather: [],
     weatherForWeek: [],
-    city_name: "",
     isLoading: false,
     error: null,
   },
   reducers: {
-    setLocation(state, { payload }) {
-      state.location = payload;
+    setDefaultLocation(state, { payload }) {
+      state.defaultLocation = payload;
+    },
+    setLocationForSearch(state, { payload }) {
+      state.locationForSearch = payload;
     },
     setScaleType(state, { payload }) {
       state.scaleType = payload;
@@ -29,7 +32,7 @@ const weatherSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentWeather.fulfilled, (state, { payload }) => {
-        state.weather = payload;
+        state.weather = [...state.weather, payload];
         state.isLoading = false;
       })
       .addCase(fetchCurrentWeather.pending, (state) => {
@@ -56,13 +59,21 @@ const weatherSlice = createSlice({
   },
 });
 
-const { setLocation, setScaleType, setLanguage } = weatherSlice.actions;
+const {
+  setDefaultLocation,
+  setLocationForSearch,
+  setScaleType,
+  setLanguage,
+  addWeatherCard,
+} = weatherSlice.actions;
 const weatherReducer = weatherSlice.reducer;
 
 const data = {
-  setLocation,
+  setDefaultLocation,
+  setLocationForSearch,
   setScaleType,
   setLanguage,
+  addWeatherCard,
   weatherReducer,
 };
 
