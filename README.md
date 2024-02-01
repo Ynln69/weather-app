@@ -17,3 +17,8 @@ Welcome to the Weather App! This application provides real-time weather informat
 - Google Maps API
 - Chart.js
 
+## Usage
+Enter the name of the city in the search bar and press enter. The app will display current weather details of the specified city.
+
+## Contact
+Yana Lunina - yanalunina69@gmail.com
