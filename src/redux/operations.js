@@ -57,7 +57,6 @@ const fetchWeatherForWeek = createAsyncThunk(
         dt,
         temp,
       }));
-      console.log(listDetails);
       return listDetails;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

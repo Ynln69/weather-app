@@ -11,7 +11,7 @@ const WeatherList = () => {
   return (
     <List>
       {weather.map((item) => {
-        return <WeatherItem weatherData={item} />;
+        return <WeatherItem weatherData={item} key={item.id} />;
       })}
     </List>
   );

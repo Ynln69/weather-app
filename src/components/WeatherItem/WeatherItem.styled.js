@@ -11,6 +11,13 @@ export const Item = styled.li`
   background-color: ${(props) =>
     props.temperature <= 0 ? "#F1F2FF" : "#FFFAF1"};
 `;
+export const ItemCloseBtn = styled.button`
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  border: none;
+  background-color: transparent;
+`;
 
 export const ItemCity = styled.h2`
   margin-bottom: 4px;

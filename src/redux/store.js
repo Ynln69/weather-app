@@ -18,7 +18,7 @@ const persistConfig = {
   key: "weather",
   version: 1,
   storage,
-  whitelist: ["scaleType", "language"],
+  whitelist: ["scaleType", "language", "weather"],
 };
 
 const persistedReducer = persistReducer(persistConfig, weatherReducer);

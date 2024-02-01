@@ -28,11 +28,17 @@ const weatherSlice = createSlice({
     setLanguage(state, { payload }) {
       state.language = payload;
     },
+    addWeatherItem: (state, { payload }) => {
+      state.weather = [...state.weather, payload];
+    },
+    deleteWeatherItem: (state, { payload }) => {
+      state.weather = state.weather.filter((item) => item.id !== payload);
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentWeather.fulfilled, (state, { payload }) => {
-        state.weather = [...state.weather, payload];
+        weatherSlice.caseReducers.addWeatherItem(state, { payload });
         state.isLoading = false;
       })
       .addCase(fetchCurrentWeather.pending, (state) => {
@@ -64,7 +70,8 @@ const {
   setLocationForSearch,
   setScaleType,
   setLanguage,
-  addWeatherCard,
+  addWeatherItem,
+  deleteWeatherItem,
 } = weatherSlice.actions;
 const weatherReducer = weatherSlice.reducer;
 
@@ -73,7 +80,8 @@ const data = {
   setLocationForSearch,
   setScaleType,
   setLanguage,
-  addWeatherCard,
+  addWeatherItem,
+  deleteWeatherItem,
   weatherReducer,
 };
 
